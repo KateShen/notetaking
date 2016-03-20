@@ -13,8 +13,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button myButton=(Button)findViewById(R.id.button1);
-        myButton.setOnClickListener(
+        Button createButton=(Button)findViewById(R.id.button_create);
+        Button viewButton=(Button)findViewById(R.id.button_check);
+
+        createButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -24,6 +26,16 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
-    }
+        viewButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.i("View", "You view all the notes");
+                        Intent j=new Intent(MainActivity.this,View.class);
+                        startActivity(j);
+                    }
+                }
 
+        );
+    }
 }

@@ -10,44 +10,34 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class create extends AppCompatActivity {
-
-
+    EditText title;
+    EditText content;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create);
+        title=(EditText)findViewById(R.id.editText_title);
+        content=(EditText)findViewById(R.id.editText_content);
 
-        final EditText editTextcontent=(EditText)findViewById(R.id.editText1);
-        Button buttonsave=(Button)findViewById(R.id.button4);
-        Button buttoncancel=(Button)findViewById(R.id.button3);
+    }
 
-
-        buttonsave.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String inputText=editTextcontent.getText().toString();
-                        Toast.makeText(create.this,"You want to save: "+inputText,Toast.LENGTH_LONG).show();
-                    }
-                }
-        );
-
-//        buttoncancel.setOnClickListener(
-//                new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Log.i("Create", "You create a new note");
-//                        Intent i = new Intent(MainActivity.this, create.class);
-//                        startActivity(i);
-//                    }
-//                }
-//        );
-
+    public void saveActivity(View view){
+        String titlestore=title.getText().toString();
+        String contentstore=content.getText().toString();
 
 
     }
 
+    public void cancelActivity(View view){
+
+
 
     }
+    public void addPicActivity(View view){
+
+
+
+    }
+}

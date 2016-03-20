@@ -15,7 +15,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".create"></activity>
+        <activity
+            android:name=".create"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".View"
+            android:parentActivityName=".MainActivity"/>
     </application>
 
 </manifest>
