@@ -8,13 +8,15 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
+    Button createButton;
+    Button viewButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button createButton=(Button)findViewById(R.id.button_create);
-        Button viewButton=(Button)findViewById(R.id.button_check);
+        createButton=(Button)findViewById(R.id.button_create);
+        viewButton=(Button)findViewById(R.id.button_check);
 
         createButton.setOnClickListener(
                 new View.OnClickListener() {
@@ -31,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Log.i("View", "You view all the notes");
-                        Intent j=new Intent(MainActivity.this,View.class);
+                        Intent j=new Intent(MainActivity.this,view1.class);
                         startActivity(j);
                     }
                 }

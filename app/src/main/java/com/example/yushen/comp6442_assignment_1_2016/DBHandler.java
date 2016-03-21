@@ -19,19 +19,25 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String KEY_ID="id";
     private static final String Key_name="title";
     private static final String Key_content="content";
+    private static final String Key_time="time";
     public DBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
+    public DBHandler(Context context){
+        super(context, DATABASE_NAME, null, DATA_VERSION);
+    }
+
+
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_CONTACTS_TABLE="CREATE TABLE "+ TABLE_NOTEBOOK+"("+ KEY_ID + " INTEGER PRIMARY KEY,"+Key_name+" INTEGER PRIMARY KEY,"+Key_content+"TEXT"+")";
+        String CREATE_CONTACTS_TABLE="CREATE TABLE "+ TABLE_NOTEBOOK+"("+ KEY_ID + " INTEGER PRIMARY KEY,"+Key_name+"TEXT"+Key_content+"TEXT"+Key_time+"TEXT"+")";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS "+TABLE_NOTEBOOK);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTEBOOK);
         onCreate(db);
 
     }
@@ -42,6 +48,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(KEY_ID,newnote.getId());
         values.put(Key_name,newnote.getName());
         values.put(Key_content, newnote.getContent());
+        values.put(Key_time,newnote.getTime());
 
         db.insert(TABLE_NOTEBOOK, null, values);
         db.close();
@@ -50,10 +57,10 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public Newnote getNewnote(int id){
         SQLiteDatabase db=this.getReadableDatabase();
-        Cursor cursor=db.query(TABLE_NOTEBOOK,new String[]{KEY_ID,Key_name,Key_content },KEY_ID + "=?",new String[]{String.valueOf(id) },null,null,null);
+        Cursor cursor=db.query(TABLE_NOTEBOOK,new String[]{KEY_ID,Key_name,Key_content,Key_time },KEY_ID + "=?",new String[]{String.valueOf(id) },null,null,null,null);
         if (cursor!=null)
             cursor.moveToFirst();
-            Newnote newno2=new Newnote(Integer.parseInt(cursor.getString(0)),cursor.getString(1),cursor.getString(2));
+            Newnote newno2=new Newnote(Integer.parseInt(cursor.getString(0)),cursor.getString(1),cursor.getString(2),cursor.getLong(3));
             return newno2;
     }
 
@@ -71,6 +78,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 newno1.setId(cursor.getInt(Integer.parseInt(cursor.getString(0))));
                 newno1.setName(cursor.getString(1));
                 newno1.setContent(cursor.getString(2));
+                newno1.setTime(cursor.getLong(3));
 
                 newnoteList.add(newno1);
             }while (cursor.moveToNext());
@@ -81,9 +89,15 @@ public class DBHandler extends SQLiteOpenHelper {
     public int getNoteCount(){
         String countquery="SELECT * FROM "+TABLE_NOTEBOOK;
         SQLiteDatabase db=this.getReadableDatabase();
-        Cursor cursor=db.rawQuery(countquery,null);
-        cursor.close();
-        return cursor.getCount();
+        Cursor cursor=db.rawQuery(countquery, null);
+
+        if (cursor.moveToFirst()==true){
+            cursor.close();
+            return cursor.getCount();
+        }
+        else
+            cursor.close();
+        return 0;
     }
 
     //update reocrd
@@ -94,6 +108,7 @@ public class DBHandler extends SQLiteOpenHelper {
         ContentValues values=new ContentValues();
         values.put(Key_name,newnote.getName());
         values.put(Key_content,newnote.getContent());
+        values.put(Key_time,newnote.getTime());
         return db.update(TABLE_NOTEBOOK,values,KEY_ID+"=?",new String[]{String.valueOf(newnote.getId())});
     }
     //delete record

@@ -18,7 +18,9 @@
         <activity
             android:name=".create"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".View"
+        <activity android:name=".view2"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".view1"
             android:parentActivityName=".MainActivity"/>
     </application>
 
