@@ -5,7 +5,11 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
+<<<<<<< HEAD
         applicationId "com.example.u5778016.note_taking"
+=======
+        applicationId "com.example.yushen.comp6442_assignment_1_2016"
+>>>>>>> fa1992dd5ee95b366b45a6f4e71ca5c202819198
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
