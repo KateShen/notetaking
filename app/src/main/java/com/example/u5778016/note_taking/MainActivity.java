@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     Button buttonadd,buttonviewall,buttonupdate,buttondelete;
     Date today=new Date(System.currentTimeMillis());
     SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd/mm/yyyy hh:mm:ss");
+    Menu menu;
     //String daten;
 
     @Override
@@ -133,5 +137,33 @@ public class MainActivity extends AppCompatActivity {
     public void view2(View view){
         Intent i=new Intent(this,view.class);
         startActivity(i);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater menuInflater=getMenuInflater();
+        menuInflater.inflate(R.menu.newmenu,menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id=item.getItemId();
+
+        switch (id){
+            case  R.id.menu_changebackground:
+                Toast.makeText(this,"change background successful",Toast.LENGTH_LONG).show();
+
+            break;
+            case  R.id.menu_wordcolor:
+                Toast.makeText(this,"change wordcolor successful",Toast.LENGTH_LONG).show();
+
+            break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

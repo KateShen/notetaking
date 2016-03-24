@@ -5,6 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Picture;
+import android.view.View;
+
+import java.sql.Blob;
 
 
 /**
@@ -13,11 +17,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "note.db";
     public static final String TABLE_NAME = "note_table";
+   // public static final String TABLE_BACKGROUND="background_table";//new
     public static final String _ID = "_id";
     public static final String TITLE = "Title";
     public static final String CONTENT = "Content";
     public static final String IMPORTANT = "Important";
     public static final String DATE = "Date";
+   // public static final Blob BACKGROUND_PICTURE=null;//new
 
 
     public DatabaseHelper(Context context) {
@@ -28,12 +34,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + TABLE_NAME + " ( _id Integer primary key autoincrement, Title text, Content text,Important text,Date text ) ");
+       // db.execSQL("create table " + TABLE_BACKGROUND + "( _id Integer primary key autoincrement, Title text, BACKGROUND_PICTURE Blob ) ");
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("drop table if exists " + TABLE_NAME);
+       // db.execSQL("drop table if exists " + TABLE_BACKGROUND);
         onCreate(db);
 
     }
@@ -64,8 +72,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db=this.getWritableDatabase();
 
         int num=editpage.NUMINPUT;
-        Cursor cursor=db.rawQuery("select * from "+ TABLE_NAME+"where _id="+num,null);
-        return cursor;
+        Cursor cursor=db.rawQuery("select * from "+ TABLE_NAME+" where _id="+num,null);
+        if (cursor!=null&&cursor.moveToFirst())
+        {return cursor;}
+        else return null;
+
     }
 
     public boolean updatedata(String id,String title, String content, String important, String date){

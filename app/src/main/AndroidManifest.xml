@@ -15,8 +15,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view" />
-        <activity android:name=".editpage"></activity>
+        <activity
+            android:name=".view"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".editpage"
+            android:parentActivityName=".view" />
+        <activity android:name=".savepic"></activity>
     </application>
 
 </manifest>
